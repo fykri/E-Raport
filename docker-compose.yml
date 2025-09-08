@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  database:
+    image: postgres:15-alpine
+    container_name: eraport-database
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: eraport
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-defaultpassword}
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - eraport-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d eraport"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eraport-backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-defaultpassword}@database:5432/eraport?schema=public
+      - PORT_BACKEND=8000
+      - ACCESS_TOKEN_SECRET=${ACCESS_TOKEN_SECRET:-your-secret-key}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET:-your-refresh-secret-key}
+    ports:
+      - "8908:8000"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - eraport-network
+    volumes:
+      - ./backend/uploads:/app/uploads  # For file uploads
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Frontend React App
+  frontend:
+    build:
+      context: ./frontEnd
+      dockerfile: Dockerfile
+    container_name: eraport-frontend
+    restart: unless-stopped
+    ports:
+      - "3109:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - eraport-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Prisma Studio (optional - for database management)
+  prisma-studio:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: eraport-prisma-studio
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-defaultpassword}@database:5432/eraport?schema=public
+    ports:
+      - "5555:5555"
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - eraport-network
+    command: ["npx", "prisma", "studio", "--hostname", "0.0.0.0"]
+    profiles:
+      - tools  # Only start when specifically requested
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  eraport-network:
+    driver: bridge

@@ -1,0 +1,36 @@
+# Use full Node.js LTS version (best compatibility)
+FROM node:18
+
+# Set working directory
+WORKDIR /app
+
+# Create a non-root user and set ownership
+RUN groupadd -r nodejs && useradd -r -g nodejs nodejs && \
+    chown -R nodejs:nodejs /app
+
+# Copy package files with correct ownership
+COPY --chown=nodejs:nodejs package*.json ./
+
+# Switch to nodejs user for installation
+USER nodejs
+
+# Install dependencies
+RUN npm ci && npm cache clean --force
+
+# Copy the rest of the application
+COPY --chown=nodejs:nodejs . .
+
+# Make startup script executable
+USER root
+RUN chmod +x /app/start.sh
+USER nodejs
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
+
+# Use startup script
+CMD ["/app/start.sh"]

@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/authContext";
 import OfflineIndicator from "./component/OfflineIndicator";
 
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";

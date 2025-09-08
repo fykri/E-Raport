@@ -1,0 +1,34 @@
+# Alternative build approach - Build locally first then Docker
+
+## Option 1: Simple Dockerfile without Prisma generate during build
+# Use this if you want to generate Prisma client during runtime
+
+FROM node:18-alpine
+
+# Install system dependencies
+RUN apk add --no-cache openssl libc6-compat curl
+
+WORKDIR /app
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+
+# Copy package files
+COPY --chown=nodejs:nodejs package*.json ./
+
+# Switch to nodejs user
+USER nodejs
+
+# Install dependencies
+RUN npm ci && npm cache clean --force
+
+# Copy all application files
+COPY --chown=nodejs:nodejs . .
+
+# Expose port
+EXPOSE 8000
+
+# Generate Prisma client and start application
+CMD ["sh", "-c", "npx prisma generate && npm start"]

@@ -4,7 +4,7 @@ import Search from "../component/input/Search";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { AddStudentButton } from "../component/button/Button";
 import Modal from "../component/Modal/ModalPesertaDidik/ModalAdd";
-import CardProfil from "../component/card/cardProfil";
+import CardProfil from "../component/card/CardProfil";
 import ModalInput from "../component/input/ModalInput";
 import { useState, useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";

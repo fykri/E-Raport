@@ -6,11 +6,9 @@ async function main() {
     await prisma.indikator.deleteMany();
     await prisma.subKategori.deleteMany();
     await prisma.kategori.deleteMany();
-    await prisma.$executeRawUnsafe(`ALTER TABLE Kategori AUTO_INCREMENT = 1`);
-    await prisma.$executeRawUnsafe(
-        `ALTER TABLE SubKategori AUTO_INCREMENT = 1`
-    );
-    await prisma.$executeRawUnsafe(`ALTER TABLE Indikator AUTO_INCREMENT = 1`);
+    await prisma.$executeRawUnsafe(`ALTER SEQUENCE "Kategori_id_kategori_seq" RESTART WITH 1`);
+    await prisma.$executeRawUnsafe(`ALTER SEQUENCE "SubKategori_id_sub_kategori_seq" RESTART WITH 1`);
+    await prisma.$executeRawUnsafe(`ALTER SEQUENCE "Indikator_id_indikator_seq" RESTART WITH 1`);
     const rawData = fs.readFileSync(
         path.join(__dirname, "data/kategori.json"),
         "utf-8"

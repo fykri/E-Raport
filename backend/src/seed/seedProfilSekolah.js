@@ -19,7 +19,7 @@ async function seedProfilSekolah() {
 
     // Optional: bersihkan data sebelumnya
     await prisma.profilSekolah.deleteMany();
-    await prisma.$executeRawUnsafe(`ALTER TABLE ProfilSekolah AUTO_INCREMENT = 1`);
+    await prisma.$executeRawUnsafe(`ALTER SEQUENCE "ProfilSekolah_id_profil_sekolah_seq" RESTART WITH 1`);
 
     for (const item of data) {
         await prisma.profilSekolah.create({

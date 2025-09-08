@@ -1,0 +1,43 @@
+# Use Node.js LTS version with Debian (no Prisma generation during build)
+FROM node:18-slim
+
+# Install additional packages needed for Prisma and curl for health checks
+RUN apt-get update && apt-get install -y \
+    openssl \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Create a non-root user and set ownership
+RUN groupadd -r nodejs && useradd -r -g nodejs nodejs && \
+    chown -R nodejs:nodejs /app
+
+# Copy package files with correct ownership
+COPY --chown=nodejs:nodejs package*.json ./
+
+# Switch to nodejs user for installation
+USER nodejs
+
+# Install dependencies (including dev dependencies for Prisma CLI)
+RUN npm ci --include=dev && npm cache clean --force
+
+# Copy the rest of the application
+COPY --chown=nodejs:nodejs . .
+
+# Make startup script executable
+USER root
+RUN chmod +x /app/start.sh
+USER nodejs
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
+
+# Use startup script that generates Prisma client at runtime
+CMD ["/app/start.sh"]

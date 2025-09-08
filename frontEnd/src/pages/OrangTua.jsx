@@ -1,6 +1,6 @@
 import Container from "../containers/container";
 import Search from "../component/input/Search";
-import CardProfil from "../component/card/cardProfil";
+import CardProfil from "../component/card/CardProfil";
 import ModalInput from "../component/input/ModalInput";
 import { useSelectedTahunAjaran } from "../hooks/useSelectedTahunAjaran";
 import { getByTahunSemester, searhPenilaian } from "../api/penilaian";
