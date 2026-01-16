@@ -115,6 +115,11 @@ const GuruKelas = () => {
         fetchData();
         showToast("success", "data berhasil ditambahkan");
     };
+    const handleEditGuru = async () => {
+        fetchData();
+        showToast("success", "data berhasil di ubah");
+    };
+
 
     const handleSearch = async () => {
         setLoading(true);
@@ -153,7 +158,7 @@ const GuruKelas = () => {
                 <ModalEditGuru
                     isOpen={openEditModal}
                     onClose={() => setOpenEditModal(false)}
-                    onSave={handleSaveGuru}
+                    onSave={handleEditGuru}
                     teacherData={selectedTeacher}
                 />
             )}

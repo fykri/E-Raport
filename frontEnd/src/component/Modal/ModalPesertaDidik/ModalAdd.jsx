@@ -108,12 +108,9 @@ const Modal = ({ onClose, onSuccess }) => {
                             id={"guru_kelas"}
                             name={"guru_kelas"}
                             disibled={loading}
-                            required
+                            required={true}
                         >
                             Guru{" "}
-                            <span className="text-red-500">
-                                * (wajib diisi)
-                            </span>
                         </ModalInput>
                         <ModalInput
                             type={"select"}
@@ -125,12 +122,9 @@ const Modal = ({ onClose, onSuccess }) => {
                             id={"tahun_ajaran"}
                             name={"tahun_ajaran"}
                             disibled={loading}
-                            required
+                            required ={true}
                         >
                             Tahun Ajaran{" "}
-                            <span className="text-red-500">
-                                * (wajib diisi)
-                            </span>
                         </ModalInput>
                     </div>
                     <div className="text-sm flex justify-between border-t-2 pt-1 border-t-gray-900/80">
@@ -177,12 +171,10 @@ const Modal = ({ onClose, onSuccess }) => {
                                 placeholder={"Masukkan nama lengkap"}
                                 htmlFor={"nama_lengkap"}
                                 onChange={onChangeHandle}
+                                required ={true}
                                 disabled={loading || disabled}
                             >
                                 Nama lengkap{" "}
-                                <span className="text-red-500">
-                                    * (wajib diisi)
-                                </span>
                             </ModalInput>
                             <ModalInput
                                 id={"nama_panggilan"}
@@ -191,6 +183,7 @@ const Modal = ({ onClose, onSuccess }) => {
                                 type={"text"}
                                 onChange={onChangeHandle}
                                 placeholder={"nama panggilan"}
+                                required ={true}
                                 disabled={loading || disabled}
                                 htmlFor={"nama_panggilan"}
                             >
@@ -208,13 +201,11 @@ const Modal = ({ onClose, onSuccess }) => {
                             name={"nis"}
                             disabled={loading || disabled}
                             onChange={onChangeHandle}
+                            
                             required={true}
                             disibled={loading}
                         >
                             NIS{" "}
-                            <span className="text-red-500">
-                                * (wajib diisi)
-                            </span>
                         </ModalInput>
                         <ModalInput
                             id={"NISN"}
@@ -224,6 +215,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"Nomor Induk Siswa Nasional"}
                             htmlFor={"NISN"}
+                            required ={true}
                             disabled={loading || disabled}
                         >
                             NISN
@@ -238,6 +230,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"Masukkan tempat kelahiran"}
                             htmlFor={"tempat_lahir"}
+                            required ={true}
                             disabled={loading || disabled}
                         >
                             Tempat lahir
@@ -250,6 +243,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"tanggal lahir"}
                             htmlFor={"tanggal_lahir"}
+                            required ={true}
                             disabled={loading || disabled}
                         >
                             Tanggal lahir
@@ -273,9 +267,9 @@ const Modal = ({ onClose, onSuccess }) => {
                             required={true}
                         >
                             Jenis kelamin
-                            <span className="text-red-500">
+                            {/*<span className="text-red-500">
                                 * (wajib diisi)
-                            </span>
+                            </span>*/}
                         </ModalInput>
                         <ModalInput
                             id={"agama"}
@@ -301,6 +295,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             placeholder={"agama"}
                             htmlFor={"agama"}
                             disabled={loading || disabled}
+                            required ={true}
                         >
                             Agama
                         </ModalInput>
@@ -315,6 +310,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             placeholder={"Contoh: 1, 2, 3, dst."}
                             htmlFor={"anakKe"}
                             disabled={loading || disabled}
+                            required ={true}
                         >
                             Anak ke-
                         </ModalInput>
@@ -333,6 +329,7 @@ const Modal = ({ onClose, onSuccess }) => {
                                 placeholder={"masukkan nama lengkap ayah"}
                                 htmlFor={"nama_ayah"}
                                 disabled={loading || disabled}
+                                required ={true}
                             >
                                 Nama Ayah
                             </ModalInput>
@@ -345,6 +342,7 @@ const Modal = ({ onClose, onSuccess }) => {
                                 placeholder={"masukkan pekerjaan ayah"}
                                 htmlFor={"pekerjaanAyah"}
                                 disabled={loading || disabled}
+                                required ={true}
                             >
                                 Pekerjaan ayah
                             </ModalInput>
@@ -359,6 +357,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"masukkan nama ibu"}
                             disabled={loading || disabled}
+                            required ={true}
                         >
                             Nama ibu
                         </ModalInput>
@@ -371,6 +370,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             placeholder={"masukkan pekerjaan ibu"}
                             htmlFor={"pekerjaanIbu"}
                             disabled={loading || disabled}
+                            required ={true}
                         >
                             Pekerjaan ibu
                         </ModalInput>
@@ -385,6 +385,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             placeholder={"masukkan nama wali (opsional)"}
                             htmlFor={"nama_wali"}
                             disabled={loading || disabled}
+                            required ={true}
                         >
                             nama Wali{" (Opsional)"}
                         </ModalInput>
@@ -403,8 +404,8 @@ const Modal = ({ onClose, onSuccess }) => {
                                         kabupaten: "Luwu",
                                         kecamatan: "Belopa",
                                         desa_atau_kelurahan: "Tampumia Radda",
-                                        jalan: "Gunung Latimojong"
-                                    })
+                                        jalan: "Gunung Latimojong",
+                                    });
                                 }}
                             >
                                 template data
@@ -419,6 +420,7 @@ const Modal = ({ onClose, onSuccess }) => {
                                 onChange={onChangeHandle}
                                 placeholder={"masukkan nama provinsi"}
                                 htmlFor={"provinsi"}
+                                required ={true}
                                 disabled={loading || disabled}
                             >
                                 Provinsi
@@ -431,6 +433,7 @@ const Modal = ({ onClose, onSuccess }) => {
                                 onChange={onChangeHandle}
                                 placeholder={"masukkan nama kabupaten"}
                                 htmlFor={"kabupaten"}
+                                required ={true}
                                 disabled={loading || disabled}
                             >
                                 Kabupaten
@@ -446,6 +449,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"masukkan nama kecamatan"}
                             htmlFor={"kecamatan"}
+                            required ={true}
                             disabled={loading || disabled}
                         >
                             Kecamatan
@@ -458,6 +462,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"masukkan nama desa/kelurahan"}
                             htmlFor={"desa_atau_kelurahan"}
+                            required ={true}
                             disabled={loading || disabled}
                         >
                             Desa / Kelurahan
@@ -472,6 +477,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             onChange={onChangeHandle}
                             placeholder={"masukkan nama jalan"}
                             htmlFor={"jalan"}
+                            required ={true}
                             disabled={loading || disabled}
                         >
                             Jalan
@@ -485,6 +491,7 @@ const Modal = ({ onClose, onSuccess }) => {
                             type={"submit"}
                             hover={"hover:bg-teal-700 w-20"}
                             disabled={loading}
+                            required ={true}
                         >
                             {loading ? (
                                 <ButtonSpinLoading size="sm" color="light" />
@@ -503,6 +510,7 @@ const Modal = ({ onClose, onSuccess }) => {
                                 setDisabled(false);
                             }}
                             disabled={loading}
+                            required ={true}
                         >
                             Reset
                         </ButtonSubmit>

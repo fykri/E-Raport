@@ -19,7 +19,7 @@ const insertData = async function (username, password, role) {
 
 const findUsername = async function (username) {
     const user = await prisma.users.findFirst({ where: { username } });
-    if (!user) throwWithStatus("username atau kata sandi salah", 400);
+    if (!user) throwWithStatus("username atau password salah", 400);
     return user;
 };
 

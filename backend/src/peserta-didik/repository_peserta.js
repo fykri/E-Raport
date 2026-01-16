@@ -68,11 +68,22 @@ const insertDataPesertaDidik = async (data) => {
                     peserta = peserta_didik.pesertaDidik;
                 }
             } else {
-                // NIS belum ada sama sekali → buat pesertaDidik baru
+                const username = pesertaDidik.nis;
+                const password = "peserta-didik";
+                const role = "Ortu";
+                const id = `PD-${uuidv4().split("-")[0]}`;
                 peserta = await tx.pesertaDidik.create({
                     data: {
-                        id_peserta_didik: `PD-${uuidv4().split("-")[0]}`,
+                        id_peserta_didik: id,
                         ...pesertaDidik,
+                    },
+                });
+                await tx.users.create({
+                    data: {
+                        username,
+                        password,
+                        role,
+                        pesertaDidikId: id,
                     },
                 });
             }
@@ -131,8 +142,8 @@ const findByTahunAjaran = async (tahunAjaranId, nama_kelas) => {
             },
             orderBy: {
                 pesertaDidik: {
-                    nama_lengkap: "asc"
-                }
+                    nama_lengkap: "asc",
+                },
             },
             distinct: ["pesertaDidikId"], // hanya ambil satu untuk setiap pesertaDidik
         });
@@ -192,8 +203,7 @@ const updatePesertaDidik = async (data, id_peserta_didik, tahun_ajaran_id) => {
             400
         );
     }
-
-    if (existing[0].tahunAjaranId !== data.tahunAjaranId) {
+    if (existing[0].tahunAjaranId !== data.tahunAjaranId || existing[0].guruId !== data.guruId) {
         const semesterId = await getSemester(data.tahunAjaranId);
 
         await prisma.$transaction([
@@ -240,6 +250,15 @@ const updatePesertaDidik = async (data, id_peserta_didik, tahun_ajaran_id) => {
             where: { id_peserta_didik },
             data: data.pesertaDidik,
         });
+        if (data.pesertaDidik.nis) {
+            const username = data.pesertaDidik.nis;
+            await prisma.users.update({
+                where: { pesertaDidikId: id_peserta_didik },
+                data: {
+                    username,
+                },
+            });
+        }
         return update;
     } catch (error) {
         throwWithStatus(errorPrisma(error), 400);
@@ -274,6 +293,11 @@ const deleteDataById = async (id_peserta_didik, id_tahun_ajaran) => {
                 tahunAjaranId: id_tahun_ajaran,
             },
         });
+        const pesertaDidik = await prisma.pesertaDidik.findFirst({
+            where: {
+                id_peserta_didik
+            }
+        })
         const existing = await prisma.rekapNilai.findFirst({
             where: {
                 pesertaDidikId: id_peserta_didik,
@@ -285,6 +309,11 @@ const deleteDataById = async (id_peserta_didik, id_tahun_ajaran) => {
                     id_peserta_didik: id_peserta_didik,
                 },
             });
+            await prisma.users.deleteMany({
+                where: {
+                    username: pesertaDidik.nis
+                }
+            })
         }
     } catch (error) {
         throwWithStatus(errorPrisma(error));

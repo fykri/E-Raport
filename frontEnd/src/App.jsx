@@ -1,6 +1,5 @@
 import "./css/App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/authContext";
 import OfflineIndicator from "./component/OfflineIndicator";
 
 import Home from "./pages/Home";
@@ -17,8 +16,9 @@ import SubKategoriPenilaian from "./component/penilaian/SubKategoriPenilaian";
 import Nilai from "./component/penilaian/Nilai";
 import OrangTua from "./pages/OrangTua";
 import Users from "./pages/Users";
-
+import ManagementPassword from "./pages/ManagementPassword";
 import RoleRoute from "./component/RoleRoute";
+import RekapNilai from "./component/RekapNilai";
 
 function App() {
     return (
@@ -36,20 +36,12 @@ function App() {
                             <OrangTua />
                         </RoleRoute>
                     }
-                >
-                    <Route
-                        path=":id_rekap_nilai"
-                        element={<KategoriPenilaian type="orang-tua" />}
-                    />
-                    <Route
-                        path=":id_rekap_nilai/:id_kategori"
-                        element={<SubKategoriPenilaian type="orang-tua" />}
-                    />
-                    <Route
-                        path=":id_rekap_nilai/:id_kategori/:id_sub_kategori"
-                        element={<Nilai type="orang-tua" />}
-                    />
-                </Route>
+                ></Route>
+                <Route path="/orang-tua/kelola-password/:id" element={
+                    <RoleRoute allowedRoles={["Ortu"]}>
+                        <ManagementPassword/>
+                    </RoleRoute>
+                }></Route>
 
                 {/* Halaman khusus Operator */}
                 <Route
@@ -113,6 +105,14 @@ function App() {
                         element={<Nilai />}
                     />
                 </Route>
+                <Route
+                    path="/penilaian/:id_rekap_nilai/:id_peserta_didik/:tahun_ajaran/:semester/:nis"
+                    element={
+                        <RoleRoute allowedRoles={["Operator"]}>
+                            <RekapNilai />
+                        </RoleRoute>
+                    }
+                ></Route>
                 <Route
                     path="/cetak-raport"
                     element={

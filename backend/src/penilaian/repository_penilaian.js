@@ -536,6 +536,44 @@ const searchRaport = async (id_tahun_ajaran, semester, keyword) => {
     }
 };
 
+const findNilaiWithId = async (id_peserta_didik, id_tahun_ajaran, semester) => {
+    try {
+        const data = await prisma.rekapNilai.findFirst({
+            where: {
+                pesertaDidikId: id_peserta_didik,
+                tahunAjaranId: id_tahun_ajaran,
+                semester: { nama: semester },
+            },
+            include: {
+                pesertaDidik: {
+                    select: {
+                        nama_lengkap: true,
+                        nis: true,
+                    },
+                },
+                kesimpulan: true,
+                penilaian: {
+                    orderBy: { indikatorId: "asc" },
+                    include: {
+                        indikator: {
+                            include: {
+                                subKategori: {
+                                    include: {
+                                        kategori: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
+        });
+        return data;
+    } catch (error) {
+        throwWithStatus(error);
+    }
+};
+
 module.exports = {
     findByTahunSemester,
     getIndikator,
@@ -548,4 +586,5 @@ module.exports = {
     getPenilaianGrouped,
     searhPenilaian,
     searchRaport,
+    findNilaiWithId,
 };

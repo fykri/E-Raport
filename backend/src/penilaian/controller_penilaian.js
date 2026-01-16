@@ -9,6 +9,7 @@ const {
     displayPenilaian,
     displaySearchPenilaian,
     displaySearhRaport,
+    getPenilaianWithId
 } = require("./services_penilaian");
 
 router.get("/", async (req, res, next) => {
@@ -26,6 +27,19 @@ router.get("/", async (req, res, next) => {
         next(error);
     }
 });
+
+router.get("/byId", async (req,res,next)=> {
+    try {
+        const {id_peserta_didik, id_tahun_ajaran, semester} = req.query
+        const data = await getPenilaianWithId(id_peserta_didik, id_tahun_ajaran, semester)
+        res.status(200).json({
+            success: true,
+            data: data
+        })
+    } catch (error) {
+        next(error)
+    }
+})
 
 router.get(
     "/search-penilaian/:id_tahun_ajaran/:semester",

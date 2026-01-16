@@ -141,17 +141,17 @@ const Users = () => {
                 onSave={handleSaveUser}
             ></ModalEditUser>
             <LayoutMenu>
-                <div className="w-5/6 flex flex-col mt-10 ">
+                <div className="w-5/6 flex flex-col mt-10">
                     <Container className="mt-5">
                         {error &&
                             error != "data tidak ada, harap tambahkan data" && (
                                 <ErrorMessage error={error} ref={errorRef} />
                             )}
                         {loading && <Loading />}
-                        <div className="flex justify-between mb-8">
+                        <div className="flex justify-between mb-8 ">
                             <form
                                 onSubmit={handleSubmit}
-                                className="flex gap-5 w-2xl"
+                                className="flex gap-5 w-4xl"
                             >
                                 <ModalInput
                                     id={"username"}
@@ -200,7 +200,7 @@ const Users = () => {
                                 >
                                     Role{" "}
                                 </ModalInput>
-                                <div className="flex items-end ml-2">
+                                <div className="flex items-end ml-2 gap-2">
                                     <ButtonSubmit
                                         bg={"bg-teal-600"}
                                         type={"submit"}
@@ -209,7 +209,7 @@ const Users = () => {
                                     >
                                         tambahkan data
                                     </ButtonSubmit>
-                                </div>
+                                </div>z
                             </form>
                         </div>
                         <ModernTable

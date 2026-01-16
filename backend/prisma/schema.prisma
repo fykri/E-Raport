@@ -41,7 +41,9 @@ model Users {
     username String
     password String
     role Role @default(Operator)
-   tokens   UserTokens[] 
+    tokens   UserTokens[] 
+    pesertaDidik   PesertaDidik? @relation(fields: [pesertaDidikId], references: [id_peserta_didik])
+    pesertaDidikId String?       @unique
 }
 
 model UserTokens {
@@ -77,7 +79,7 @@ model ProfilSekolah {
 model Guru {
   id_guru         String @id @default(cuid())
   nama_guru       String @db.VarChar(25)
-  NUPTK            String @db.VarChar(25)
+  NUPTK           String @db.VarChar(25)
   nama_kelas      Kelas?
   rekapNilai      RekapNilai[]  // relasi many ke RekapNila
 }
@@ -103,8 +105,8 @@ model PesertaDidik {
   kecamatan                   String?       @db.VarChar(50)
   kabupaten                   String?       @db.VarChar(50)
   provinsi                    String?       @db.VarChar(50)
-
-  rekapNilai      RekapNilai[] 
+  user              Users?
+  rekapNilai        RekapNilai[] 
 }
 
 
@@ -136,7 +138,7 @@ model RekapNilai {
   semester                   Semester     @relation(fields: [semesterId], references: [id_semester], onDelete: Cascade, onUpdate: Cascade)
   guru                       Guru           @relation(fields: [guruId], references: [id_guru], onDelete: Restrict, onUpdate: Cascade)
 
-  penilaian     Penilaian[]
+  penilaian        Penilaian[]
   kesimpulan       Kesimpulan?
 
   @@unique([pesertaDidikId, semesterId])

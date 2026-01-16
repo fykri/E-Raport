@@ -12,7 +12,6 @@ import Loading from "../component/Loading";
 import ModalKesimpulan from "../component/Modal/ModalKesimpulan/ModalUpdateKesimpulan";
 import usePagination from "../hooks/usePagination";
 import PaginationControls from "../component/PaginationControls";
-
 const Penilaian = () => {
     const { tahunAjaranOptions } = useSelectedTahunAjaran();
     const [selectedTahunAjaran, setSelectedTahunAjaran] = useState("");
@@ -277,21 +276,45 @@ const Penilaian = () => {
                                         : ""
                                 }`}
                             >
-                                {pesertaDidik.map((item) => (
-                                    <CardProfil
-                                        key={item.id_rekap_nilai}
-                                        mode="penilaian"
-                                        status={item?.status}
-                                        onNilaiClick={(data) => {
-                                            navigate(data?.id_rekap_nilai);
-                                        }}
-                                        data={item}
-                                        onSaranClick={(data) => {
-                                            setRekapNilai(data?.id_rekap_nilai);
-                                            setOpenModalKesimpulan(true);
-                                        }}
-                                    />
-                                ))}
+                                {!isLoading &&
+                                    !error &&
+                                    currentData.length > 0 && (
+                                        <div
+                                            className={`flex flex-wrap lg:gap-10 gap-6 md:gap-6 mt-10 ${
+                                                pesertaDidik.length % 4 === 0 &&
+                                                pesertaDidik.length > 0
+                                                    ? "justify-center sm:gap-10"
+                                                    : ""
+                                            }`}
+                                        >
+                                            {currentData.map((item) => (
+                                                <CardProfil
+                                                    key={item.id_rekap_nilai}
+                                                    mode="penilaian"
+                                                    status={item?.status}
+                                                    onNilaiClick={(data) => {
+                                                        navigate(
+                                                            data?.id_rekap_nilai
+                                                        );
+                                                    }}
+                                                    data={item}
+                                                    onSaranClick={(data) => {
+                                                        setRekapNilai(
+                                                            data?.id_rekap_nilai
+                                                        );
+                                                        setOpenModalKesimpulan(
+                                                            true
+                                                        );
+                                                    }}
+                                                    onRekapNilai={(data) => {
+                                                        navigate(
+                                                            `${data.id_rekap_nilai}/${data.peserta_didik.id_peserta_didik}/${selectedTahunAjaran}/${selectedSemester}/${data.peserta_didik.nis}`
+                                                        );
+                                                    }}
+                                                />
+                                            ))}
+                                        </div>
+                                    )}
                             </div>
                         )}
                         {pesertaDidik.length > 15 && (

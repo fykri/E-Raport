@@ -21,9 +21,7 @@ const CetakRaport = () => {
     const [selectedSemester, setSelectedSemester] = useState("");
     const [pesertaDidik, setPesertaDidik] = useState([]);
     const [selectedPeserta, setSelectedPeserta] = useState(null);
-    const [selectedTanggalCetak, setSelectedTanggalCetak] = useState(
-        getTodayLocal()
-    );
+    const [selectedTanggalCetak, setSelectedTanggalCetak] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [profilSekolah, setProfilSekolah] = useState("");
     const [error, setError] = useState("");
@@ -59,13 +57,6 @@ const CetakRaport = () => {
         fetchData();
     }, [selectedSemester, selectedTahunAjaran, selectedTanggalCetak]);
 
-    function getTodayLocal() {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month = String(today.getMonth() + 1).padStart(2, "0");
-        const day = String(today.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    }
 
     const fetchData = async () => {
         setIsLoading(true);
@@ -238,6 +229,7 @@ const CetakRaport = () => {
                         </ModalInput>
                         <ModalInput
                             type={"date"}
+                            id={"tanggal_cetak"}
                             htmlFor={"tanggal_cetak"}
                             value={selectedTanggalCetak}
                             onChange={(val) => {
@@ -335,7 +327,13 @@ const CetakRaport = () => {
                             <div style={{ width: "100%", height: "600px" }}>
                                 <ModernPDFViewer
                                     style={{ width: "100%", height: "100%" }}
-                                    downloadFileName={`Rapor-${selectedPeserta?.pesertaDidik?.nis || "NIS"}-${selectedPeserta?.pesertaDidik?.nama_lengkap || "Nama"}.pdf`}
+                                    downloadFileName={`Rapor-${
+                                        selectedPeserta?.pesertaDidik?.nis ||
+                                        "NIS"
+                                    }-${
+                                        selectedPeserta?.pesertaDidik
+                                            ?.nama_lengkap || "Nama"
+                                    }.pdf`}
                                 >
                                     <CetakNilaiPDF
                                         kategori={selectedPeserta?.kategori}

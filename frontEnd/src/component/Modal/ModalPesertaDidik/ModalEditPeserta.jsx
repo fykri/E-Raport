@@ -118,12 +118,9 @@ const ModalEditPesertaDidik = ({
                             id={"guru_kelas"}
                             name={"guru_kelas"}
                             disibled={loading}
-                            required
+                            required={true}
                         >
                             Guru{" "}
-                            <span className="text-red-500">
-                                * (wajib diisi)
-                            </span>
                         </ModalInput>
                         <ModalInput
                             type={"select"}
@@ -140,12 +137,9 @@ const ModalEditPesertaDidik = ({
                             id={"tahun_ajaran"}
                             name={"tahun_ajaran"}
                             disibled={loading}
-                            required
+                            required={true}
                         >
                             Tahun Ajaran{" "}
-                            <span className="text-red-500">
-                                * (wajib diisi)
-                            </span>
                         </ModalInput>
                     </div>
                     <div className="flex mt-1 flex-col w-full">
@@ -162,11 +156,9 @@ const ModalEditPesertaDidik = ({
                                 htmlFor={"nama_lengkap"}
                                 onChange={onChangeHandelEdit}
                                 disibled={loading}
+                                required={true}
                             >
                                 Nama lengkap{" "}
-                                <span className="text-red-500">
-                                    * (wajib diisi)
-                                </span>
                             </ModalInput>
                             <ModalInput
                                 id={"nama_panggilan"}
@@ -177,6 +169,7 @@ const ModalEditPesertaDidik = ({
                                 placeholder={"nama panggilan"}
                                 htmlFor={"nama_panggilan"}
                                 disibled={loading}
+                                required={true}
                             >
                                 Nama panggilan
                             </ModalInput>
@@ -194,9 +187,6 @@ const ModalEditPesertaDidik = ({
                                 disibled={loading}
                             >
                                 NIS{" "}
-                                <span className="text-red-500">
-                                    * (wajib diisi)
-                                </span>
                             </ModalInput>
                             <ModalInput
                                 id={"NISN"}
@@ -209,6 +199,7 @@ const ModalEditPesertaDidik = ({
                                 }
                                 htmlFor={"NISN"}
                                 disibled={loading}
+                                required={true}
                             >
                                 NISN
                             </ModalInput>
@@ -223,6 +214,7 @@ const ModalEditPesertaDidik = ({
                                 placeholder={"Masukkan tempat kelahiran"}
                                 htmlFor={"tempat_lahir"}
                                 disibled={loading}
+                                required={true}
                             >
                                 Tempat lahir
                             </ModalInput>
@@ -235,6 +227,7 @@ const ModalEditPesertaDidik = ({
                                 placeholder={"tanggal lahir"}
                                 htmlFor={"tanggal_lahir"}
                                 disibled={loading}
+                                required={true}
                             >
                                 Tanggal lahir
                             </ModalInput>
@@ -257,11 +250,9 @@ const ModalEditPesertaDidik = ({
                                 options={["Laki-Laki", "Perempuan"]}
                                 htmlFor={"jenis-kelamin"}
                                 disibled={loading}
+                                required={true}
                             >
                                 Jenis kelamin
-                                <span className="text-red-500">
-                                    * (wajib diisi)
-                                </span>
                             </ModalInput>
                             <ModalInput
                                 id={"agama"}
@@ -290,6 +281,7 @@ const ModalEditPesertaDidik = ({
                                 placeholder={"agama"}
                                 htmlFor={"agama"}
                                 disibled={loading}
+                                required={true}
                             >
                                 Agama
                             </ModalInput>
@@ -304,6 +296,7 @@ const ModalEditPesertaDidik = ({
                                 placeholder={"Contoh: 1, 2, 3, dst."}
                                 htmlFor={"anakKe"}
                                 disibled={loading}
+                                required={true}
                             >
                                 Anak ke-
                             </ModalInput>
@@ -323,6 +316,7 @@ const ModalEditPesertaDidik = ({
                                     placeholder={"masukkan nama lengkap ayah"}
                                     htmlFor={"nama_ayah"}
                                     disibled={loading}
+                                    required={true}
                                 >
                                     Nama Ayah
                                 </ModalInput>
@@ -335,6 +329,7 @@ const ModalEditPesertaDidik = ({
                                     placeholder={"masukkan pekerjaan ayah"}
                                     htmlFor={"pekerjaanAyah"}
                                     disibled={loading}
+                                    required={true}
                                 >
                                     Pekerjaan ayah
                                 </ModalInput>
@@ -348,6 +343,7 @@ const ModalEditPesertaDidik = ({
                                     onChange={onChangeHandelEdit}
                                     placeholder={"masukkan nama ibu"}
                                     disibled={loading}
+                                    required={true}
                                 >
                                     Nama ibu
                                 </ModalInput>
@@ -360,6 +356,7 @@ const ModalEditPesertaDidik = ({
                                     placeholder={"masukkan pekerjaan ibu"}
                                     htmlFor={"pekerjaanIbu"}
                                     disibled={loading}
+                                    required={true}
                                 >
                                     Pekerjaan ibu
                                 </ModalInput>
@@ -376,6 +373,7 @@ const ModalEditPesertaDidik = ({
                                     }
                                     htmlFor={"nama_wali"}
                                     disibled={loading}
+                                    required={true}
                                 >
                                     nama Wali{" (Opsional)"}
                                 </ModalInput>
@@ -416,6 +414,7 @@ const ModalEditPesertaDidik = ({
                                         placeholder={"masukkan nama provinsi"}
                                         htmlFor={"provinsi"}
                                         disibled={loading}
+                                        required={true}
                                     >
                                         Provinsi
                                     </ModalInput>
@@ -428,6 +427,7 @@ const ModalEditPesertaDidik = ({
                                         placeholder={"masukkan nama kabupaten"}
                                         htmlFor={"kabupaten"}
                                         disibled={loading}
+                                        required={true}
                                     >
                                         Kabupaten
                                     </ModalInput>
@@ -442,6 +442,7 @@ const ModalEditPesertaDidik = ({
                                         placeholder={"masukkan nama kecamatan"}
                                         htmlFor={"kecamatan"}
                                         disibled={loading}
+                                        required={true}
                                     >
                                         Kecamatan
                                     </ModalInput>
@@ -459,6 +460,7 @@ const ModalEditPesertaDidik = ({
                                         }
                                         htmlFor={"desa_atau_kelurahan"}
                                         disibled={loading}
+                                        required={true}
                                     >
                                         Desa / Kelurahan
                                     </ModalInput>
@@ -473,6 +475,7 @@ const ModalEditPesertaDidik = ({
                                         placeholder={"masukkan nama jalan"}
                                         htmlFor={"jalan"}
                                         disibled={loading}
+                                        required={true}
                                     >
                                         Jalan
                                     </ModalInput>

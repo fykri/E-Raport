@@ -32,6 +32,9 @@ body {
     .font-times {
         font-family: "Times New Roman", Times, serif;
     }
+    input[type="date"] {
+        @apply appearance-auto;
+    }
 
     .font-tahoma {
         font-family: Tahoma, Geneva, sans-serif;

@@ -48,10 +48,12 @@ const tahun_ajaran = require("./src/tahun-ajaran/controller_tahun_ajaran");
 const penilaian = require("./src/penilaian/controller_penilaian");
 const amount = require("./src/amount/controller_amount");
 const kesimpulan = require("./src/kesimpulan/controller_kesimpulan");
-const user = require("./src/users/controller_user")
+const user = require("./src/users/controller_user");
+const ortu = require("./src/orang-tua/controller_orangTua");
 // Routing untuk setiap fitur
 app.use("/", auth);
-app.use("/users", verifyToken, checkRole(["Operator"]), user)
+app.use("/users", verifyToken, checkRole(["Operator"]), user);
+app.use("/ortu", verifyToken, checkRole(["Ortu", "Operator"]), ortu);
 app.use("/amount", verifyToken, checkRole(["Operator"]), amount);
 app.use("/profil-sekolah", verifyToken, checkRole(["Operator"]), profilSekolah);
 app.use("/guru", verifyToken, checkRole(["Operator"]), guru);
@@ -78,7 +80,7 @@ app.use(
 
 // Middleware untuk menangani error
 app.use((err, req, res, next) => {
-    console.error(err.message); 
+    console.error(err.message);
     res.status(err.status || 500).json({
         success: false,
         message: err.message || "Terjadi kesalahan server",

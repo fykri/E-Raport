@@ -13,12 +13,13 @@ export const displayData = async () => {
     }
 };
 
-export const insertData = async (username, password, role) => {
+export const insertData = async (username, password, role, id_peserta_didik) => {
     try {
         const response = await axiosInstance.post("/users/add-users", {
             username,
             password,
             role,
+            id_peserta_didik
         });
         return response.data;
     } catch (error) {

@@ -14,7 +14,7 @@ const Login = async (username, password, userAgent) => {
 
     const user = await findUsername(username);
     if (user.password !== password)
-        throwWithStatus("username atau kata sandi salah", 400);
+        throwWithStatus("username atau password salah", 400);
 
     const payload = { id: user.id, username: user.username, role: user.role };
 

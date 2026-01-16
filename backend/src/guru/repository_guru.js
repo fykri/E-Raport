@@ -71,7 +71,7 @@ const searchDataGuru = async (data) => {
                         }
                     },
                     {
-                        NSIP: {
+                        NUPTK: {
                             contains:data
                         }
                     }

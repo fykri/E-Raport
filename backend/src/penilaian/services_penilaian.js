@@ -10,6 +10,7 @@ const {
     penilaianList,
     searhPenilaian,
     searchRaport,
+    findNilaiWithId,
 } = require("./repository_penilaian");
 
 const { findByKelas } = require("../peserta-didik/repository_peserta");
@@ -365,6 +366,75 @@ const displaySearhRaport = async (id_tahun_ajaran, semester, keyword) => {
     }
 };
 
+const getPenilaianWithId = async (
+    id_peserta_didik,
+    id_tahun_ajaran,
+    semester
+) => {
+    if (!id_peserta_didik) {
+        throwWithStatus("peserta didik tidak ditemukan", 403);
+    }
+    if (!id_tahun_ajaran) {
+        throwWithStatus("tahun ajaran tidak ditemukan", 403);
+    }
+    if (!semester) {
+        throwWithStatus("semester tidak ditemukan", 403);
+    }
+
+    try {
+        const grouped = {};
+        const data = await findNilaiWithId(
+            id_peserta_didik,
+            id_tahun_ajaran,
+            semester
+        );
+        data.penilaian.forEach((p) => {
+            const kategori = p.indikator.subKategori.kategori;
+            const subKategori = p.indikator.subKategori;
+
+            if (!grouped[kategori.id_kategori]) {
+                grouped[kategori.id_kategori] = {
+                    id_kategori: kategori.id_kategori,
+                    nama_kategori: kategori.nama_kategori,
+                    subKategori: {},
+                };
+            }
+
+            if (
+                !grouped[kategori.id_kategori].subKategori[
+                    subKategori.id_sub_kategori
+                ]
+            ) {
+                grouped[kategori.id_kategori].subKategori[
+                    subKategori.id_sub_kategori
+                ] = {
+                    nama_sub_kategori: subKategori.nama_sub_kategori,
+                    indikator: [],
+                };
+            }
+
+            grouped[kategori.id_kategori].subKategori[
+                subKategori.id_sub_kategori
+            ].indikator.push({
+                indikator: p.indikator.nama_indikator,
+                nilai: p.nilai ?? null,
+            });
+        });
+
+        return {
+            pesertaDidik: data.pesertaDidik,
+            guru: data.guru,
+            kesimpulan: data.kesimpulan,
+            kategori: Object.values(grouped).map((kat) => ({
+                ...kat,
+                subKategori: Object.values(kat.subKategori),
+            })),
+        };
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     displayPesertaDidikByTahunSemester,
     postPenilaian,
@@ -375,4 +445,5 @@ module.exports = {
     displayPenilaian,
     displaySearchPenilaian,
     displaySearhRaport,
+    getPenilaianWithId,
 };

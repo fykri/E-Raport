@@ -16,7 +16,7 @@ export const useSelectedGuru = () => {
 
     const guruOptions =
         dataGuru?.map((item) => ({
-            label: `${item.nama_guru} (${item.nama_kelas.split(" ")[1]})`,
+            label: `${item.nama_kelas}: ${item.nama_guru}`,
             value: item.id_guru,
         })) || [];
 
