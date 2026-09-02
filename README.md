@@ -379,21 +379,37 @@ http://localhost:5173
 
 ## 📸 Screenshot
 
-### Dashboard
+### Login
 
-![Dashboard](./screenshots/dashboard.png)
+![Login](./screenshot/login-image.png)
 
-### Data Peserta Didik
+### dashboard
 
-![Peserta Didik](./screenshots/peserta-didik.png)
+![dashboard](./screenshot/dashboard-image.png)
 
-### Penilaian
+### users account
 
-![Penilaian](./screenshots/penilaian.png)
+![users](./screenshot/users-image.png)
 
-### Rapor
+### guru
 
-![Rapor](./screenshots/raport.png)
+![guru](./screenshot/guru-image.png)
+
+### tahun ajaran
+
+![tahun](./screenshot/tahun-image.png)
+
+### peserta didik
+
+![peserta_didik](./screenshot/pesertadidik-image.png)
+
+### penilaian
+
+![penilaian](./screenshot/penilaian-image.png)
+
+### cetak raport
+
+![cetak_raport](./screenshot/cetak-raport.png)
 
 ---
 
